@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 NUMBER=$1
 
@@ -11,4 +11,3 @@ fi
  # -gt
  # -eq
  # -ne
- 
