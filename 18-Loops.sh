@@ -17,12 +17,12 @@ if [ $USERID -ne 0 ]; then
     exit 1 # failure is other than 0
 fi
 
-VALIDATE(){ # funsction receive the inputs through args just like shell script args
+VALIDATE(){ # function receive the inputs through args just like shell script args
     if [ $1 -ne 0 ]; then
         echo -e "Installing $2 ... $R FAILURE $N" | tee -a $LOG_FILE
         exit 1
     else
-        echo -e "Installing $2 ... $G is success $N"  | tee -a $LOG_FILE
+        echo -e "Installing $2 ... $G Success $N"  | tee -a $LOG_FILE
     fi   
 }
 
@@ -30,5 +30,14 @@ VALIDATE(){ # funsction receive the inputs through args just like shell script a
 
 for package in $@
 do
-  echo "package is: $package"
+  #check package is already installed or not
+  dnf list installed $package &>>$LOG_FILE
+
+  #if exit status is =0 , already installed -ne 0 need to installed it
+  if [$? -ne 0]; then
+    dnf install $package -y &>>$LOG_FILE
+    VALIDATE $? "$Package"
+
+  else
+    echo -e "$package already installed ... $Y SKIPPING $N"
 done
