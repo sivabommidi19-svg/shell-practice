@@ -3,6 +3,6 @@
 set -e
 
 echo "Hello"
-Echo "Before error.."
+eEcho "Before error.."
 asvdjhavdfv; dnf
 echo "After error"
